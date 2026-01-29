@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening: The Letters of the Alphabet</title>
+    <style>
+        :root { --primary: #2c3e50; --secondary: #34495e; --correct: #27ae60; --wrong: #e74c3c; --explain: #3498db; --translate: #e67e22; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: var(--primary); border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        
+        .section { margin-bottom: 40px; padding: 20px; border: 1px solid #eee; border-radius: 10px; }
+        .audio-box { background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid var(--primary); }
+        .audio-error { color: var(--wrong); font-size: 0.9em; margin-top: 5px; display: none; }
+        
+        h2 { color: var(--primary); border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 0; }
+        h3 { color: var(--secondary); margin-top: 20px; }
+        
+        .btn-group { margin: 10px 0; display: flex; gap: 8px; }
+        .btn-sm { padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; color: white; font-size: 0.85em; transition: 0.2s; }
+        .btn-sm:hover { opacity: 0.8; }
+        .btn-explain { background: var(--explain); }
+        .btn-translate { background: var(--translate); }
+        
+        .info-box { display: none; margin-top: 10px; padding: 12px; border-radius: 6px; font-size: 0.9em; background: #fff; border: 1px dashed #ccc; }
+        .alphabet-box { background: #f0f4f8; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 1.2em; letter-spacing: 2px; line-height: 2; }
+
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin: 20px 0; }
+        .input-item { display: flex; align-items: center; gap: 8px; }
+        .input-item label { font-weight: bold; min-width: 25px; }
+        input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-weight: bold; }
+        
+        /* Circle Table */
+        .circle-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .circle-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .circle-btn { width: 45px; height: 45px; border: 1px solid #ccc; background: #fff; border-radius: 50%; cursor: pointer; font-size: 1.1em; transition: 0.3s; }
+        .circle-btn.selected { background: #ffeaa7; border-color: #fdcb6e; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        
+        .check-btn { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        .score { font-weight: bold; margin-top: 10px; text-align: right; color: var(--primary); }
+        
+        .feedback-correct { border-color: var(--correct) !important; background: #e8f5e9 !important; }
+        .feedback-wrong { border-color: var(--wrong) !important; background: #ffebee !important; }
+        .ans-hint { color: var(--correct); font-size: 0.8em; font-weight: bold; display: block; }
+        
+        .meaning-text { display: none; color: #555; font-size: 0.85em; margin-top: 4px; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Basic IELTS Listening: Unit 1</h1>
+
+    <div class="section">
+        <h2>Exercise 1: Identifying letters</h2>
+        <div class="audio-box">
+            <strong>Audio 01.mp3</strong><br>
+            <audio controls onloadeddata="hideError(this)" onerror="showError(this)">
+                <source src="./01.mp3" type="audio/mpeg">
+            </audio>
+            <p class="audio-error">Không phát được audio. Hãy đảm bảo file mp3 nằm cùng thư mục và đúng tên 01.mp3.</p>
+        </div>
+
+        <h3>A. Listen and repeat the letters after the speaker.</h3>
+        <div class="btn-group">
+            <button class="btn-sm btn-explain" onclick="toggle('exp1a')">Giải thích</button>
+            <button class="btn-sm btn-translate" onclick="toggle('tra1a')">Dịch nghĩa</button>
+        </div>
+        <div id="exp1a" class="info-box">Phần này giúp bạn làm quen với cách phát âm bảng chữ cái tiếng Anh từ A-Z.</div>
+        <div id="tra1a" class="info-box">Nghe và lặp lại các chữ cái sau người nói.</div>
+        <div class="alphabet-box">
+            Capital letters: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z<br>
+            Small letters: a b c d e f g h i j k l m n o p q r s t u v w x y z
+        </div>
+
+        <h3>B. Listen and write down the letters.</h3>
+        <div class="btn-group">
+            <button class="btn-sm btn-explain" onclick="toggle('exp1b')">Giải thích</button>
+            <button class="btn-sm btn-translate" onclick="toggle('tra1b')">Dịch nghĩa</button>
+        </div>
+        <div id="exp1b" class="info-box">Mỗi số tương ứng với một chữ cái người nói phát âm. Hãy điền 1 ký tự vào mỗi ô.</div>
+        <div id="tra1b" class="info-box">Nghe bản ghi âm và viết các chữ cái xuống.</div>
+        <div class="input-grid" id="grid1b"></div>
+        <button class="check-btn" onclick="check1B()">Check Exercise 1B</button>
+        <div class="score" id="score1b"></div>
+
+        <h3>C. Circle the letters you hear.</h3>
+        <div class="btn-group">
+            <button class="btn-sm btn-explain" onclick="toggle('exp1c')">Giải thích</button>
+            <button class="btn-sm btn-translate" onclick="toggle('tra1c')">Dịch nghĩa</button>
+        </div>
+        <div id="exp1c" class="info-box">Click vào các chữ cái bạn nghe thấy trong bài. Click lần nữa để bỏ chọn.</div>
+        <div id="tra1c" class="info-box">Khoanh tròn các chữ cái bạn nghe thấy.</div>
+        <table class="circle-table" id="table1c"></table>
+        <button class="check-btn" onclick="check1C()">Check Exercise 1C</button>
+        <div class="score" id="score1c"></div>
+    </div>
+
+    <div class="section">
+        <h2>Exercise 2: Common abbreviations</h2>
+        <div class="audio-box">
+            <strong>Audio 02.mp3</strong><br>
+            <audio controls onloadeddata="hideError(this)" onerror="showError(this)">
+                <source src="./02.mp3" type="audio/mpeg">
+            </audio>
+            <p class="audio-error">Không phát được audio. Hãy đảm bảo file mp3 nằm cùng thư mục và đúng tên 02.mp3.</p>
+        </div>
+        <div class="btn-group">
+            <button class="btn-sm btn-explain" onclick="toggle('exp2')">Giải thích</button>
+            <button class="btn-sm btn-translate" onclick="toggle('tra2')">Dịch nghĩa</button>
+        </div>
+        <div id="exp2" class="info-box">Các từ viết tắt (abbreviations) thường xuất hiện trong đời sống. Nghe và ghi lại cụm từ viết tắt (ví dụ: BBC, WHO).</div>
+        <div id="tra2" class="info-box">Nghe một số từ viết tắt phổ biến và viết chúng vào chỗ trống.</div>
+        <div class="input-grid" id="grid2"></div>
+        <button class="check-btn" onclick="check2()">Check Exercise 2</button>
+        <div class="score" id="score2"></div>
+    </div>
+
+    <div class="section">
+        <h2>Exercise 3: Names of places</h2>
+        <div class="audio-box">
+            <strong>Audio 03.mp3</strong><br>
+            <audio controls onloadeddata="hideError(this)" onerror="showError(this)">
+                <source src="./03.mp3" type="audio/mpeg">
+            </audio>
+            <p class="audio-error">Không phát được audio. Hãy đảm bảo file mp3 nằm cùng thư mục và đúng tên 03.mp3.</p>
+        </div>
+        <div class="btn-group">
+            <button class="btn-sm btn-explain" onclick="toggle('exp3')">Giải thích</button>
+            <button class="btn-sm btn-translate" onclick="toggle('tra3')">Dịch nghĩa</button>
+        </div>
+        <div id="exp3" class="info-box">Nghe tên các địa danh tại Anh. Lưu ý viết đúng chính tả từng chữ cái.</div>
+        <div id="tra3" class="info-box">Nghe tên các địa danh và viết chúng xuống.</div>
+        <div class="input-grid" id="grid3"></div>
+        <button class="check-btn" onclick="check3()">Check Exercise 3</button>
+        <div class="score" id="score3"></div>
+    </div>
+</div>
+
+<script>
+    // DATA - Theo đáp án từ file 01, 02, 03.mp3
+    const data = {
+        ex1b: ["P", "I", "F", "H", "J", "K", "O", "M", "R", "L", "W", "T", "U", "X", "S", "A", "B", "E"],
+        ex1c: {
+            layout: [
+                ["B", "P", "E", "D", "G"],
+                ["K", "F", "M", "X", "I"],
+                ["A", "H", "N", "Z", "V"],
+                ["C", "J", "L", "O", "W"],
+                ["R", "T", "U", "Y", "S"]
+            ],
+            answers: ["F", "G", "P", "H", "V", "J", "W", "N", "U", "R", "A", "B", "Y"]
+        },
+        ex2: [
+            {word: "BBC", mean: "British Broadcasting Corporation"},
+            {word: "SOS", mean: "Tín hiệu cứu nguy khẩn cấp"},
+            {word: "WHO", mean: "World Health Organization"},
+            {word: "TUC", mean: "Trades Union Congress"},
+            {word: "ECM", mean: "European Common Market"},
+            {word: "SDP", mean: "Social Democratic Party"},
+            {word: "ECE", mean: "Economic Commission for Europe"},
+            {word: "EEC", mean: "European Economic Community"},
+            {word: "IBA", mean: "Independent Broadcasting Authority"},
+            {word: "LEA", mean: "Local Education Authority"}
+        ],
+        ex3: [
+            "Edinburgh", "Glasgow", "Aberdeen", "Dundee", "Cardiff", 
+            "Swansea", "Newport", "Belfast", "Manchester", "Leeds", 
+            "Sheffield", "Leicester", "Liverpool", "Birmingham", "Nottingham", 
+            "Coventry", "Bristol", "Bradford", "London", "Brighton"
+        ]
+    };
+
+    // Render 1B
+    const grid1b = document.getElementById('grid1b');
+    for(let i=1; i<=18; i++) {
+        grid1b.innerHTML += `
+            <div class="input-item">
+                <label>${i}.</label>
+                <input type="text" id="in1b-${i}" maxlength="1" oninput="this.value = this.value.toUpperCase()">
+            </div>`;
+    }
+
+    // Render 1C
+    const table1c = document.getElementById('table1c');
+    data.ex1c.layout.forEach(row => {
+        let tr = document.createElement('tr');
+        row.forEach(char => {
+            let td = document.createElement('td');
+            td.innerHTML = `<button class="circle-btn" data-val="${char}" onclick="this.classList.toggle('selected')">${char}</button>`;
+            tr.appendChild(td);
+        });
+        table1c.appendChild(tr);
+    });
+
+    // Render 2
+    const grid2 = document.getElementById('grid2');
+    data.ex2.forEach((item, idx) => {
+        grid2.innerHTML += `
+            <div class="input-item-wrap">
+                <div class="input-item">
+                    <label>${idx+1}.</label>
+                    <input type="text" id="in2-${idx}" oninput="this.value = this.value.toUpperCase()">
+                </div>
+                <div id="mean2-${idx}" class="meaning-text">${item.mean}</div>
+            </div>`;
+    });
+
+    // Render 3
+    const grid3 = document.getElementById('grid3');
+    for(let i=1; i<=20; i++) {
+        grid3.innerHTML += `
+            <div class="input-item">
+                <label>${i}.</label>
+                <input type="text" id="in3-${i}">
+            </div>`;
+    }
+
+    // Functions
+    function toggle(id) {
+        let el = document.getElementById(id);
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function showError(el) { el.nextElementSibling.style.display = 'block'; }
+    function hideError(el) { el.nextElementSibling.style.display = 'none'; }
+
+    function check1B() {
+        let score = 0;
+        data.ex1b.forEach((ans, i) => {
+            let input = document.getElementById(`in1b-${i+1}`);
+            if(input.value.trim() === ans) {
+                input.className = 'feedback-correct';
+                score++;
+            } else {
+                input.className = 'feedback-wrong';
+                if(!input.nextElementSibling) input.insertAdjacentHTML('afterend', `<span class="ans-hint">${ans}</span>`);
+            }
+        });
+        document.getElementById('score1b').innerText = `Score: ${score}/18`;
+    }
+
+    function check1C() {
+        let score = 0;
+        let btns = document.querySelectorAll('.circle-btn');
+        btns.forEach(btn => {
+            let val = btn.getAttribute('data-val');
+            let isSelected = btn.classList.contains('selected');
+            let isCorrect = data.ex1c.answers.includes(val);
+
+            if(isSelected && isCorrect) {
+                btn.style.backgroundColor = "#c8e6c9";
+                btn.style.borderColor = "var(--correct)";
+                score++;
+            } else if(isSelected && !isCorrect) {
+                btn.style.backgroundColor = "#ffcdd2";
+                btn.style.borderColor = "var(--wrong)";
+            } else if(!isSelected && isCorrect) {
+                btn.style.border = "2px dashed var(--correct)";
+            }
+        });
+        document.getElementById('score1c').innerText = `Correct: ${score}/${data.ex1c.answers.length}`;
+    }
+
+    function check2() {
+        let score = 0;
+        data.ex2.forEach((item, i) => {
+            let input = document.getElementById(`in2-${i}`);
+            let mean = document.getElementById(`mean2-${i}`);
+            mean.style.display = 'block';
+            if(input.value.trim() === item.word) {
+                input.className = 'feedback-correct';
+                score++;
+            } else {
+                input.className = 'feedback-wrong';
+                if(!input.nextElementSibling) input.insertAdjacentHTML('afterend', `<span class="ans-hint">${item.word}</span>`);
+            }
+        });
+        document.getElementById('score2').innerText = `Score: ${score}/10`;
+    }
+
+    function check3() {
+        let score = 0;
+        data.ex3.forEach((ans, i) => {
+            let input = document.getElementById(`in3-${i+1}`);
+            if(input.value.trim().toLowerCase() === ans.toLowerCase()) {
+                input.className = 'feedback-correct';
+                score++;
+            } else {
+                input.className = 'feedback-wrong';
+                if(!input.nextElementSibling) input.insertAdjacentHTML('afterend', `<span class="ans-hint">${ans}</span>`);
+            }
+        });
+        document.getElementById('score3').innerText = `Score: ${score}/20`;
+    }
+</script>
+
+</body>
+</html>
